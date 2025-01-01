@@ -27,14 +27,13 @@ namespace pluginIConfigRepro
                 var host = builder.Build();
 
                 var configuration = host.Services.GetRequiredService<IConfiguration>();
-                Console.WriteLine($"ApplicationName from config:\t {configuration["ApplicationName"]}");
-
                 var commandServices = host.Services.GetServices<ICommand>().ToList();
 
                 Console.WriteLine("Commands: ");
                 commandServices.ForEach((command) =>
                 {
                     Console.WriteLine($"{command.Name}\t - {command.Description}");
+                    command.Execute();
                 });
             }
             catch (Exception ex)

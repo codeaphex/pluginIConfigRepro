@@ -6,22 +6,11 @@ namespace HelloPlugin
 {
     public class HelloCommand : ICommand
     {
-        private readonly IConfiguration? _configuration;
-        private readonly IServiceProvider? _serviceProvider;
+        private readonly IConfiguration _configuration;
 
-        // This ctor fails immediately
-        //public HelloCommand(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //    var baseUrl = configuration["Plugins:HOU:BaseUrl"];
-        //}
-
-        public HelloCommand(IServiceProvider serviceProvider)
+        public HelloCommand(IConfiguration configuration)
         {
-            // IConfiguration seems to be listed in descriptors
-            // But fails when trying to retrieve an instance
-            _serviceProvider = serviceProvider;
-            //_configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            _configuration = configuration;
         }
 
         public string Name { get => "hello"; }
@@ -29,7 +18,7 @@ namespace HelloPlugin
 
         public int Execute()
         {
-            Console.WriteLine("Hello !!!");
+            Console.WriteLine(_configuration["HelloMessage"]);
             return 0;
         }
     }
